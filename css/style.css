@@ -1,0 +1,45 @@
+/**
+ * Main style
+ */
+
+* {
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+.main {
+    width: 500px;
+    /* height: 700px; */
+    height: 900px;
+    margin: 50px auto;
+    position: relative;
+    overflow: hidden;
+    border: solid 1px black;
+}
+
+.tetris {
+    width: 500px;
+    height: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    background-color: white;
+}
+
+.excel {
+    width: 50px;
+    height: 50px;
+    border: solid 1px #CCC;
+}
+
+.excel-test {
+    width: 50px;
+    height: 50px;
+    background: rgb(243, 243, 243);
+}
+
+.figure, .set {
+    background-color: #1E448C;
+}
