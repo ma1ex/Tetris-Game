@@ -42,4 +42,7 @@
 
 .figure, .set {
     background-color: #1E448C;
+    /* box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.83);
+	-webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.8); */
 }
