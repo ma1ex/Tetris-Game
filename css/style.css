@@ -5,16 +5,19 @@
 * {
     box-sizing: border-box;
     font-family: Arial;
+    font-size: 1.05em;
+    line-height:  0.6em;
 }
 
 .main {
     width: 500px;
     height: 700px;
     /* height: 900px; */
-    margin: 50px auto;
+    margin: 20px auto;
     position: relative;
     overflow: hidden;
-    border: solid 1px black;
+    border: solid 1px #cccccc;
+    box-shadow: 5px 10px 20px rgba(0,0,0,0.3), -5px -10px 20px rgba(255,255,255,0.5);
 }
 
 .tetris {
@@ -25,40 +28,100 @@
     position: absolute;
     bottom: 0;
     overflow: hidden;
-    background-color: white;
+    background: linear-gradient(to top, #e2e2e2, #ffffff);
 }
 
 .excel {
     width: 50px;
     height: 50px;
-    border: solid 1px #CCC;
+    box-shadow: -5px -10px 5px rgba(0,0,0,0.05);
+    border-radius: 20%;
 }
 
 .excel-test {
     width: 50px;
     height: 50px;
-    background: rgb(243, 243, 243);
+    background: #f3f3f3;
 }
 
 .figure, .set {
-    background-color: #1E448C;
+    background: linear-gradient(45deg, #4e4e4e, #d1d1d1);
+    /* border-radius: 50%; */
+    border-radius: 20%;
+    /* box-shadow: 5px 10px 20px rgba(0,0,0,0.3), -5px -10px 20px rgba(255,255,255,0.5); */
+    box-shadow: 5px 10px 20px rgba(0,0,0,0.3);
+
     /* box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.8);
 	-moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.83);
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.8); */
 }
 
+/* Figure colors */
+.blue {
+    background: linear-gradient(45deg, darkblue, aqua);
+}
+
+.teal {
+    background: linear-gradient(45deg, Teal, MediumAquamarine);
+}
+
+.orange {
+    background: linear-gradient(45deg, OrangeRed, DarkOrange);
+}
+
+.red {
+    background: linear-gradient(45deg, Crimson, LightPink);
+}
+
+.purple {
+    background: linear-gradient(45deg, Purple, Fuchsia);
+}
+
+.green {
+    background: linear-gradient(45deg, DarkGreen, PaleGreen);
+}
+
+.brown {
+    background: linear-gradient(45deg, SaddleBrown, SandyBrown);
+}
+
+.olive {
+    background: linear-gradient(45deg, Olive, YellowGreen);
+}
+
+.pink {
+    background: linear-gradient(45deg, DeepPink, HotPink);
+}
+
+.khaki {
+    background: linear-gradient(45deg, DarkKhaki, Khaki);
+}
+
+.yellow {
+    background: linear-gradient(45deg, Gold, Yellow);
+}
+
+.light-blue {
+    background: linear-gradient(45deg, SteelBlue, SkyBlue);
+}
+
 input {
-    display: block;
-    margin: 30px auto;
+    position: absolute;
+    top: 20px;
+    left: 20px;
     font-size: 30px;
     padding: 10px;
+
+    /* border: solid 1px lightgreen; */
 }
 
 .controls {
-    padding: 20px;
+    padding: 5px;
     position: absolute;
-    top: 200px;
-    right: 200px;
+    top: 80px;
+    left: 20px;
+
+    /* border: solid 1px lightgreen; */
 }
 
 .modal {

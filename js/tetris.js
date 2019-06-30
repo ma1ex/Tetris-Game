@@ -4,31 +4,44 @@
 
 'use strict';
 
-let overlay = document.querySelector('.overlay'); // Перекрывающий слов на всю страницу
-let modal = document.querySelector('.modal');     // Окно выбора уровня сложности
-let speed = 0;                                    // Скорость падения фигур
-
-// Реакция на события нажатия кнопок выбора уровня сложности
-modal.addEventListener('click', function(e) {
-    if (e.target.classList.contains('easy')) {
-        speed = 1000;
-    } else if (e.target.classList.contains('normal')) {
-        speed = 500;
-    } else if (e.target.classList.contains('hard')) {
-        speed = 200;
-    }
-
-    // После того, как выбор был сделан, скрываем слой и модальное окно и стартуем игру
-    if (e.target.classList.contains('button')) {
-        modal.style.display = 'none';
-        overlay.style.display = 'none';
-        startGame();
-
-    }
-});
+let speed = 0; // Скорость падения фигур
 
 /**
- * Функция с основной логикой игры
+ * Начальный экран (сцена) при загрузке игры
+ */
+function introScene() {
+    let overlay = document.querySelector('.overlay'); // Перекрывающий слов на всю страницу
+    let modal = document.querySelector('.modal');     // Окно выбора уровня сложности
+    
+    /* if(modal.style.display == 'none' && overlay.style.display == 'none') {
+        modal.style.display = 'flex';
+        overlay.style.display = '';
+    } */
+
+    // Реакция на события нажатия кнопок выбора уровня сложности
+    modal.addEventListener('click', function(e) {
+        if (e.target.classList.contains('easy')) {
+            speed = 1000;
+        } else if (e.target.classList.contains('normal')) {
+            speed = 500;
+        } else if (e.target.classList.contains('hard')) {
+            speed = 200;
+        }
+
+        // После того, как выбор был сделан, скрываем слой и модальное окно и стартуем игру
+        if (e.target.classList.contains('button')) {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+            startGame();
+
+        }
+    });
+}
+introScene();
+
+
+/**
+ * Функция со всей логикой игры
  */
 function startGame() {
     // Создание основного элемента DOM, содержащего сетку игрового поля
@@ -349,24 +362,58 @@ function startGame() {
         ]
     ];
 
+    // Массив с CSS-классами цветов для фигур
+    let colorsArr = [
+        'blue',
+        'teal',
+        'orange',
+        'red',
+        'purple',
+        'green',
+        'brown',
+        'olive',
+        'pink',
+        'khaki',
+        'yellow',
+        'light-blue'
+    ];
+
     // Текущая фигура, выбранная генератором псевдослучайных чисел; 
     // выбирается из массива фигур и далее с ней происходит основная работа
     let currentFigure = 0;
+    // Текущий цвет фигуры
+    let currentColor = 0;
     // Массив с координатами для дальнейшей закраски
     let figureBody = 0;
     // Начальный флаг поворота фигуры
     let rotate = 1; 
 
     /**
+     * Генератор псевдослучайных чисел
+     *
+     * @param   {array}  arr      Массив на вход
+     * @param   {boolean}  wrapper  если нужно получить значения, а не ключи
+     *
+     * @return  Номер ключа массива или его значение
+     */
+    const getRandom = (arr, wrapper = false) => {
+        if (wrapper) {
+            return arr[Math.round( Math.random() * (arr.length-1) )];
+        }
+        return Math.round( Math.random() * (arr.length-1) );
+    };
+    
+    /**
      * Функция создания фигуры
      */
     function create() {
-        // Получение случайного числа в пределах длины массива с фигурами
-        let getRandom = () => Math.round( Math.random() * (mainArr.length-1) );
+        
         // Сброс поворота фигуры по умолчанию
         rotate = 1;
         // Случайная фигура
-        currentFigure = getRandom();
+        currentFigure = getRandom(mainArr);
+        // Случайный цвет
+        currentColor = getRandom(colorsArr, true);
     
         // Формирование фигуры по заданным исходным координатам;
         // в этом массиве массив
@@ -384,8 +431,8 @@ function startGame() {
         // Присвоение CSS-стиля к ячейкам сформированной фигуры - закраска
         for (let i = 0; i < figureBody.length; i++) {
             figureBody[i].classList.add('figure');
+            figureBody[i].classList.add(currentColor);
         }
-
     }
     create();
 
@@ -424,6 +471,7 @@ function startGame() {
             // удаляем у фигуры класс .figure
             for (let i = 0; i < figureBody.length; i++) {
                 figureBody[i].classList.remove('figure');
+                figureBody[i].classList.remove(currentColor);
             }
 
             // после заново перезаписываем координаты падающей фигуры, где posX оставляем
@@ -438,11 +486,13 @@ function startGame() {
             // Снова присваиваем CSS-стиль .figure, т.е. закрашиваем
             for (let i = 0; i < figureBody.length; i++) {
                 figureBody[i].classList.add('figure');
+                figureBody[i].classList.add(currentColor);
             }
         } else { // далее описываем логику, если движение вниз невозможно
             // удаление класса .figure и присвоение класса .set
             for (let i = 0; i < figureBody.length; i++) {
                 figureBody[i].classList.remove('figure');
+                figureBody[i].classList.remove(currentColor);
                 figureBody[i].classList.add('set');
             }
 
@@ -559,6 +609,7 @@ function startGame() {
                 // клавиша управления
                 for (let i = 0; i < figureBody.length; i++) {
                     figureBody[i].classList.remove('figure');
+                    figureBody[i].classList.remove(currentColor);
                 }
                 
                 // Присваиваем фигуре новые координаты
@@ -567,6 +618,7 @@ function startGame() {
                 // И снова добавляем класс .figure по новым координатам
                 for (let i = 0; i < figureBody.length; i++) {
                     figureBody[i].classList.add('figure');
+                    figureBody[i].classList.add(currentColor);
                 }
             }
         }
@@ -610,6 +662,7 @@ function startGame() {
                 // клавиша управления
                 for (let i = 0; i < figureBody.length; i++) {
                     figureBody[i].classList.remove('figure');
+                    figureBody[i].classList.remove(currentColor);
                 }
                 
                 // Присваиваем фигуре новые координаты
@@ -618,6 +671,7 @@ function startGame() {
                 // И снова добавляем класс .figure по новым координатам
                 for (let i = 0; i < figureBody.length; i++) {
                     figureBody[i].classList.add('figure');
+                    figureBody[i].classList.add(currentColor);
                 }
                 
                 // Если клавиша вверх была нажата 4 раза, т.е. фигура повернулась
@@ -629,6 +683,12 @@ function startGame() {
                     rotate = 1;
                 }
             }
-        } 
+        } else if (e.keyCode == 32) { // Пауза по нажатию на пробел
+            alert('ПАУЗА. \n Нажмите "OK", чтобы продолжить.');
+        } else if (e.keyCode == 27) { // Выход из игры по Esc
+            if (confirm('Вы действительно хотите покинуть игру?')) {
+                location.reload();
+            }
+        }
     });
 }
